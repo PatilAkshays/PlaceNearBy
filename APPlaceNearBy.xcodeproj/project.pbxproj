@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		040FC3A11DBB37510079E605 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040FC3A01DBB37510079E605 /* CoreData.framework */; };
 		045A4D331DBBD27600E2B7B1 /* CustomListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045A4D321DBBD27600E2B7B1 /* CustomListTableViewCell.m */; };
+		0488EDEE1DBD0C6800CE5705 /* PlaceDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0488EDED1DBD0C6800CE5705 /* PlaceDetailsViewController.m */; };
 		049D40EF1DB9E0FB00EA507E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D40EE1DB9E0FB00EA507E /* main.m */; };
 		049D40F21DB9E0FB00EA507E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D40F11DB9E0FB00EA507E /* AppDelegate.m */; };
 		049D40F51DB9E0FB00EA507E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D40F41DB9E0FB00EA507E /* ViewController.m */; };
@@ -16,7 +17,6 @@
 		049D40FA1DB9E0FB00EA507E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 049D40F91DB9E0FB00EA507E /* Assets.xcassets */; };
 		049D40FD1DB9E0FB00EA507E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 049D40FB1DB9E0FB00EA507E /* LaunchScreen.storyboard */; };
 		049D41061DB9E21900EA507E /* PlaceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D41051DB9E21900EA507E /* PlaceListViewController.m */; };
-		049D41091DB9E49B00EA507E /* PlaceDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D41081DB9E49B00EA507E /* PlaceDetailsViewController.m */; };
 		049D410B1DBA051600EA507E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049D410A1DBA051600EA507E /* MapKit.framework */; };
 		049D410E1DBA100B00EA507E /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 049D410D1DBA100B00EA507E /* CustomTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -25,6 +25,7 @@
 		040FC3A01DBB37510079E605 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		045A4D311DBBD27600E2B7B1 /* CustomListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomListTableViewCell.h; sourceTree = "<group>"; };
 		045A4D321DBBD27600E2B7B1 /* CustomListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomListTableViewCell.m; sourceTree = "<group>"; };
+		0488EDED1DBD0C6800CE5705 /* PlaceDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailsViewController.m; sourceTree = "<group>"; };
 		049D40EA1DB9E0FB00EA507E /* APPlaceNearBy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APPlaceNearBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049D40EE1DB9E0FB00EA507E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		049D40F01DB9E0FB00EA507E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		049D41041DB9E21900EA507E /* PlaceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceListViewController.h; sourceTree = "<group>"; };
 		049D41051DB9E21900EA507E /* PlaceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceListViewController.m; sourceTree = "<group>"; };
 		049D41071DB9E49B00EA507E /* PlaceDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailsViewController.h; sourceTree = "<group>"; };
-		049D41081DB9E49B00EA507E /* PlaceDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailsViewController.m; sourceTree = "<group>"; };
 		049D410A1DBA051600EA507E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		049D410C1DBA100B00EA507E /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		049D410D1DBA100B00EA507E /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 				045A4D311DBBD27600E2B7B1 /* CustomListTableViewCell.h */,
 				045A4D321DBBD27600E2B7B1 /* CustomListTableViewCell.m */,
 				049D41071DB9E49B00EA507E /* PlaceDetailsViewController.h */,
-				049D41081DB9E49B00EA507E /* PlaceDetailsViewController.m */,
+				0488EDED1DBD0C6800CE5705 /* PlaceDetailsViewController.m */,
 				049D410C1DBA100B00EA507E /* CustomTableViewCell.h */,
 				049D410D1DBA100B00EA507E /* CustomTableViewCell.m */,
 				049D40F61DB9E0FB00EA507E /* Main.storyboard */,
@@ -177,7 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				049D41091DB9E49B00EA507E /* PlaceDetailsViewController.m in Sources */,
+				0488EDEE1DBD0C6800CE5705 /* PlaceDetailsViewController.m in Sources */,
 				049D41061DB9E21900EA507E /* PlaceListViewController.m in Sources */,
 				049D410E1DBA100B00EA507E /* CustomTableViewCell.m in Sources */,
 				045A4D331DBBD27600E2B7B1 /* CustomListTableViewCell.m in Sources */,

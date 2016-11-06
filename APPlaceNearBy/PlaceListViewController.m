@@ -9,6 +9,7 @@
 #import "PlaceListViewController.h"
 #import "CustomListTableViewCell.h"
 #import "ViewController.h"
+#import "PlaceDetailsViewController.h"
 
 
 
@@ -28,18 +29,25 @@
     placeList = [[NSMutableArray alloc]init];
     
     
-    if ([self.selectedPlaceType isEqualToString:@"Atm"]) {
+    if ([self.selectedPlaceType isEqualToString:@"atm"]) {
         
         self.title = self.selectedPlaceType.uppercaseString;
     }
     else{
-        self.title = self.selectedPlaceType.capitalizedString;
+        NSString *place = self.selectedPlaceType.capitalizedString;
+        
+        NSString* placeType = [place stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+
+        
+        self.title =placeType;
     }
     
-
-   // [self getPlaceListWithAPIKey:kGoogleAPIKey placeType:self.selectedPlaceType radius:1000 lattitude:kLatitude longitude:kLongitude];
-
     
+
+    [self getPlaceListWithAPIKey:kGoogleAPIKey placeType:self.selectedPlaceType radius:1000 lattitude:kLatitude longitude:kLongitude];
+    
+    [self setUp];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,6 +64,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)setUp {
+    
+    self.listIndicator.hidesWhenStopped = YES;
+    
+}
 
 -(void)startLocating {
     
@@ -88,9 +102,8 @@
         
     }
     
-    [self getPlaceListWithAPIKey:kGoogleAPIKey placeType:self.selectedPlaceType radius:1000 lattitude:currentLatitude.intValue longitude:currentLongitude.intValue];
+    [self getPlaceListWithAPIKey:kGoogleAPIKey placeType:self.selectedPlaceType radius:1000 lattitude:currentLatitude.floatValue longitude:currentLongitude.floatValue];
 
-    
 }
 - (IBAction)refreshAction:(id)sender {
     
@@ -103,9 +116,10 @@
                        radius:(int)radius
                     lattitude:(double)latitude
                     longitude:(double)longitude
-
 {
     
+    [self.listIndicator startAnimating];
+
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/xml?&key=%@&location=%f,%f&radius=%d&types=%@",key,latitude,longitude,radius,type];
     
     
@@ -139,15 +153,23 @@
                     }
                     else {
                         //alert
+                        
+                        [self.listIndicator stopAnimating];
+
                     }
                 }
                 else {
                     //alert
+                    [self.listIndicator stopAnimating];
+
                 }
                 
             }
             else {
                 //alert
+                
+                [self.listIndicator stopAnimating];
+
             }
         }
         
@@ -177,14 +199,14 @@
     
     
     
-    
+      [self.listIndicator stopAnimating];
+
        NSMutableDictionary *tempDictionary = [placeList objectAtIndex:indexPath.row];
     
         NSLog(@"%@",tempDictionary);
     
-    
-        NSString *address = [tempDictionary valueForKey:@"vicinity"];
         NSString *placeName = [tempDictionary valueForKey:@"name"];
+        NSString *address = [tempDictionary valueForKey:@"vicinity"];
         NSString *placeID = [tempDictionary valueForKey:@"place_id"];
 
     
@@ -231,6 +253,21 @@
     else if ([elementName isEqualToString:@"place_id"]) {
         dataString = [[NSMutableString alloc]init];
     }
+    else if ([elementName isEqualToString:@"lat"]) {
+        dataString = [[NSMutableString alloc]init];
+    }
+
+    else if ([elementName isEqualToString:@"lng"]) {
+        dataString = [[NSMutableString alloc]init];
+    }
+    
+    else if ([elementName isEqualToString:@"photo_reference"]) {
+        dataString = [[NSMutableString alloc]init];
+    }
+    else if ([elementName isEqualToString:@"width"]) {
+        dataString = [[NSMutableString alloc]init];
+    }
+
     
 }
 
@@ -261,6 +298,28 @@
         [placeDictionary setValue:dataString forKey:@"place_id"];
         
     }
+    else if ([elementName isEqualToString:@"lat"]) {
+        
+        [placeDictionary setValue:dataString forKey:@"lat"];
+        
+    }
+    else if ([elementName isEqualToString:@"lng"]) {
+        
+        [placeDictionary setValue:dataString forKey:@"lng"];
+        
+    }
+    else if ([elementName isEqualToString:@"photo_reference"]) {
+        
+        [placeDictionary setValue:dataString forKey:@"photo_reference"];
+        
+    }
+
+    else if ([elementName isEqualToString:@"width"]) {
+        
+        [placeDictionary setValue:dataString forKey:@"width"];
+        
+    }
+
     else if([elementName isEqualToString:@"PlaceSearchResponse"]){
         
         
@@ -274,22 +333,40 @@
 }
 
 -(void)updateTableView {
+    
     [self.placeListTableView reloadData];
     
 }
 
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    PlaceDetailsViewController *placeDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PlaceDetailsViewController"];
+
+    NSDictionary *placeDic = [placeList objectAtIndex:indexPath.row];
+
+    NSString *place_id = [placeDic valueForKey:@"place_id"];
     
-    NSString *placeType = [placeList objectAtIndex:indexPath.row];
+    NSString *latitude = [placeDic valueForKey:@"lat"];
+    NSString *longitude = [placeDic valueForKey:@"lng"];
+    NSString *photoReference = [placeDic valueForKey:@"photo_reference"];
+    NSString *width = [placeDic valueForKey:@"width"];
+
+
+
+    placeDetailViewController.selectedPlaceID = place_id;
+    placeDetailViewController.selectedPlaceLat = latitude;
+    placeDetailViewController.selectedPlaceLng = longitude;
+    placeDetailViewController.selectedPhotoReference = photoReference;
+    placeDetailViewController.selectedPhotoWidth = width;
+
     
-    PlaceDetailsViewController *placeListViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PlaceDetailsViewController"];
-    
-    placeListViewController.selectedPlaceID = placeType;
-    
-    
-    [self.navigationController pushViewController:placeListViewController animated:YES];
-    
+
+    [self.navigationController pushViewController:placeDetailViewController animated:YES];
+
 }
+
 
 
 @end

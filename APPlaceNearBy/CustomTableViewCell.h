@@ -10,8 +10,13 @@
 
 @interface CustomTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UILabel *labelReview;
 
+
+@property (strong, nonatomic) IBOutlet UILabel *labelReviewName;
+
+@property (strong, nonatomic) IBOutlet UILabel *labelReviewTime;
+
+@property (strong, nonatomic) IBOutlet UILabel *labelreviewText;
 
 
 

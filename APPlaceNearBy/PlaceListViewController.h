@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import "PlaceDetailsViewController.h"
 
 
 
@@ -19,19 +18,21 @@
     NSString *currentLongitude;
     
     NSMutableArray *placeList;
-    
+    NSMutableDictionary *placeDictionary;
+    NSMutableDictionary *latLongDictionary;
+
+
     NSXMLParser *parser;
     
     NSString *dataString;
 
-    NSMutableDictionary *placeDictionary;
     
 }
 
 @property NSString *selectedPlaceType;
 
-
 @property (strong, nonatomic) IBOutlet UITableView *placeListTableView;
 - (IBAction)refreshAction:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *listIndicator;
 @end

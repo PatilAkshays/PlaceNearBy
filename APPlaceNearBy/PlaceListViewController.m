@@ -23,7 +23,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-   // [self startLocating];
 
     
     placeList = [[NSMutableArray alloc]init];
@@ -45,8 +44,9 @@
     
 
     [self getPlaceListWithAPIKey:kGoogleAPIKey placeType:self.selectedPlaceType radius:1000 lattitude:kLatitude longitude:kLongitude];
-    
+
     [self setUp];
+   // [self startLocating];
 
 }
 
@@ -102,13 +102,10 @@
         
     }
     
-    [self getPlaceListWithAPIKey:kGoogleAPIKey placeType:self.selectedPlaceType radius:1000 lattitude:currentLatitude.floatValue longitude:currentLongitude.floatValue];
+   // [self getPlaceListWithAPIKey:kGoogleAPIKey placeType:self.selectedPlaceType radius:1000 lattitude:currentLatitude.floatValue longitude:currentLongitude.floatValue];
 
 }
-- (IBAction)refreshAction:(id)sender {
-    
-    [self startLocating];
-}
+
 
 
 -(void)getPlaceListWithAPIKey:(NSString *)key
@@ -183,60 +180,6 @@
 
 
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return placeList.count;
-
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-    CustomListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomList_Cell"];
-    
-    
-    
-      [self.listIndicator stopAnimating];
-
-       NSMutableDictionary *tempDictionary = [placeList objectAtIndex:indexPath.row];
-    
-        NSLog(@"%@",tempDictionary);
-    
-        NSString *placeName = [tempDictionary valueForKey:@"name"];
-        NSString *address = [tempDictionary valueForKey:@"vicinity"];
-        NSString *placeID = [tempDictionary valueForKey:@"place_id"];
-
-    
-   
-        cell.nameLabel.text = placeName;
-    
-        cell.nameLabel.textColor = [UIColor blueColor];
-    
-        cell.nameLabel.font = [UIFont boldSystemFontOfSize:16];
-    
-
-        cell.addressLabel.text = address;
-    
-        cell.addressLabel.textColor = [UIColor darkGrayColor];
-    
-      cell.addressLabel.font = [UIFont systemFontOfSize:15];
-
-    
-        cell.placeIdLabel.text = placeID;
-    
-  //  cell.placeIdLabel.textColor = [UIColor blackColor];
-
-    
-      cell.backgroundColor = [UIColor lightTextColor];
-    
-    
-    return cell;
-    
-    
-}
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
     
@@ -248,6 +191,9 @@
         dataString = [[NSMutableString alloc]init];
     }
     else if ([elementName isEqualToString:@"vicinity"]) {
+        dataString = [[NSMutableString alloc]init];
+    }
+    else if ([elementName isEqualToString:@"rating"]) {
         dataString = [[NSMutableString alloc]init];
     }
     else if ([elementName isEqualToString:@"place_id"]) {
@@ -267,7 +213,9 @@
     else if ([elementName isEqualToString:@"width"]) {
         dataString = [[NSMutableString alloc]init];
     }
-
+    else if ([elementName isEqualToString:@"open_now"]) {
+        dataString = [[NSMutableString alloc]init];
+    }
     
 }
 
@@ -293,11 +241,17 @@
         [placeDictionary setValue:dataString forKey:@"vicinity"];
         
     }
+    else if ([elementName isEqualToString:@"rating"]) {
+        
+        [placeDictionary setValue:dataString forKey:@"rating"];
+        
+    }
     else if ([elementName isEqualToString:@"place_id"]) {
         
         [placeDictionary setValue:dataString forKey:@"place_id"];
         
     }
+
     else if ([elementName isEqualToString:@"lat"]) {
         
         [placeDictionary setValue:dataString forKey:@"lat"];
@@ -311,7 +265,6 @@
     else if ([elementName isEqualToString:@"photo_reference"]) {
         
         [placeDictionary setValue:dataString forKey:@"photo_reference"];
-        
     }
 
     else if ([elementName isEqualToString:@"width"]) {
@@ -319,9 +272,13 @@
         [placeDictionary setValue:dataString forKey:@"width"];
         
     }
+    else if ([elementName isEqualToString:@"open_now"]) {
+        
+        [placeDictionary setValue:dataString forKey:@"open_now"];
+        
+    }
 
     else if([elementName isEqualToString:@"PlaceSearchResponse"]){
-        
         
         [self performSelectorOnMainThread:@selector(updateTableView) withObject:nil waitUntilDone:NO];
         
@@ -338,6 +295,61 @@
     
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return placeList.count;
+    
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    CustomListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomList_Cell"];
+    
+    
+    
+    [self.listIndicator stopAnimating];
+    
+    NSMutableDictionary *tempDictionary = [placeList objectAtIndex:indexPath.row];
+    
+    NSLog(@"%@",tempDictionary);
+    
+    NSString *placeName = [tempDictionary valueForKey:@"name"];
+    NSString *address = [tempDictionary valueForKey:@"vicinity"];
+    NSString *rating = [tempDictionary valueForKey:@"rating"];
+    
+    
+    
+    cell.nameLabel.text = placeName;
+    
+    cell.nameLabel.textColor = [UIColor blueColor];
+    
+    cell.nameLabel.font = [UIFont boldSystemFontOfSize:16];
+    
+  //  [cell.addressLabel setLineBreakMode:NSLineBreakByWordWrapping];
+
+    cell.addressLabel.text = address;
+    
+    cell.addressLabel.textColor = [UIColor darkGrayColor];
+    
+    cell.addressLabel.font = [UIFont systemFontOfSize:15];
+    
+    
+    cell.placeIdLabel.text = [NSString stringWithFormat:@"Rating: %@",rating];
+    
+    //  cell.placeIdLabel.textColor = [UIColor blackColor];
+    
+    
+    cell.backgroundColor = [UIColor lightTextColor];
+    
+    
+    return cell;
+    
+    
+}
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -352,6 +364,7 @@
     NSString *longitude = [placeDic valueForKey:@"lng"];
     NSString *photoReference = [placeDic valueForKey:@"photo_reference"];
     NSString *width = [placeDic valueForKey:@"width"];
+    NSString *status = [placeDic valueForKey:@"open_now"];
 
 
 
@@ -360,6 +373,7 @@
     placeDetailViewController.selectedPlaceLng = longitude;
     placeDetailViewController.selectedPhotoReference = photoReference;
     placeDetailViewController.selectedPhotoWidth = width;
+    placeDetailViewController.selectedPlaceStatus = status;
 
     
 

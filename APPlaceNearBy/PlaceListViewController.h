@@ -32,7 +32,6 @@
 @property NSString *selectedPlaceType;
 
 @property (strong, nonatomic) IBOutlet UITableView *placeListTableView;
-- (IBAction)refreshAction:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *listIndicator;
 @end

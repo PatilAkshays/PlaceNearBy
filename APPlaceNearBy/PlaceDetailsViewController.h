@@ -18,17 +18,22 @@
     
     
     NSString *photoRef;
-    double widthPhoto;
+    NSString *CurrentStatus;
+
+    int widthPhoto;
     
     
     NSXMLParser *parser;
     
     NSMutableArray *placeDetailsList;
+    NSMutableArray *reviewsList;
 
     NSMutableDictionary *placeDetailsDictionary;
-    
+    NSMutableDictionary *reviewsDictionary;
+
     NSString *detailDataString;
-    
+    NSString *reviewString;
+
 
 }
 
@@ -37,6 +42,7 @@
 @property NSString *selectedPlaceLng;
 @property NSString *selectedPhotoReference;
 @property NSString *selectedPhotoWidth;
+@property NSString *selectedPlaceStatus;
 
 
 @property (strong, nonatomic) IBOutlet MKMapView *locationMapView;
@@ -47,13 +53,13 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelAddress;
 @property (strong, nonatomic) IBOutlet UILabel *labelContactNo;
 
-- (IBAction)doneAction:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableViewReview;
 
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *detailsListIndicator;
 
+- (IBAction)buttonDone:(id)sender;
 
 
 

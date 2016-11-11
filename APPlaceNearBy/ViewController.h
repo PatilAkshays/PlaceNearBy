@@ -6,7 +6,7 @@
 //  Copyright © 1938 Saka Aksh. All rights reserved.
 //
 
-#define kGoogleAPIKey @"AIzaSyBLxU3ZsFMCRBJdhFJU6TC7lQ6_hqPBI_g"
+#define kGoogleAPIKey @"AIzaSyDAYKFQOgnZZf40Z01qhu1VWNQ281Xh6Rk"
 #define kLatitude 19.0760
 
 #define kLongitude 72.8777
